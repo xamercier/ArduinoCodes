@@ -1,0 +1,56 @@
+package ca.xamercier.comm;
+
+import java.util.Scanner;
+import com.fazecast.jSerialComm.*;
+
+import ca.xamercier.comm.utils.CommUtils;
+import ca.xamercier.comm.utils.readThread;
+
+public class MainComm {
+
+	public static SerialPort port = null;
+	public static Scanner data = null;
+
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
+
+		/*
+		JFrame window = new JFrame();
+		JSlider slider = new JSlider();
+		slider.setMaximum(1023);
+		window.add(slider);
+		window.pack();
+		window.setVisible(true);
+		 */
+		
+		SerialPort[] ports = SerialPort.getCommPorts();
+		System.out.println("Select a port:");
+		int i = 1;
+		for (SerialPort port : ports){
+			System.out.println(i++ + ": " + port.getSystemPortName());
+		}
+		Scanner s = new Scanner(System.in);
+		int chosenPort = s.nextInt();
+
+		SerialPort serialPort = ports[chosenPort -1];
+		if (serialPort.openPort()) {
+			System.out.println("Port opened successfully.");
+			port = serialPort;
+			serialPort.setBaudRate(9600);
+		} else {
+			System.out.println("Unable to open the port.");
+			return;
+		}
+		serialPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
+		data = new Scanner(serialPort.getInputStream());
+
+		readThread mainThread = new readThread();
+		mainThread.start();
+		
+		while(mainThread.isAlive()){
+		}
+
+		System.out.println("Exiting the program.");
+	}
+
+}

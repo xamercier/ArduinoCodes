@@ -1,0 +1,32 @@
+package ca.xamercier.comm.utils;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+import ca.xamercier.comm.MainComm;
+
+public class CommUtils {
+
+	public static void read(Scanner data) {
+		String value = null;
+		try {
+			value = data.nextLine().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("Read from arduino: " + value);
+	}
+	
+	public static void send(String message){
+		byte[] byteMessage = null;
+		try {
+			byteMessage = message.getBytes();
+			MainComm.port.getOutputStream().write(byteMessage);
+			MainComm.port.getOutputStream().flush();
+			System.out.println("Sending to arduino: " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

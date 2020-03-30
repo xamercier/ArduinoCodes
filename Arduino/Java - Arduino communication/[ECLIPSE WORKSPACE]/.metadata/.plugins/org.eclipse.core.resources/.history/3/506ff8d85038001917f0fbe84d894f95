@@ -1,0 +1,14 @@
+package ca.xamercier.comm.utils;
+
+public class readThread extends Thread{
+	
+	@Override
+	public void run() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

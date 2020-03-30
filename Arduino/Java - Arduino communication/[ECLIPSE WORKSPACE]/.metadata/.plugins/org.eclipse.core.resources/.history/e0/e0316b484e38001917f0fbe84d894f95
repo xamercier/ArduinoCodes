@@ -1,0 +1,21 @@
+package ca.xamercier.comm.utils;
+
+import java.util.Scanner;
+
+public class CommUtils {
+
+	public static void read(Scanner data) {
+		String value = null;
+		try {
+			value = data.nextLine().toString();
+			System.out.println("READING A LINE");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(value);
+	}
+	
+	public static void send(String message){
+	}
+
+}
